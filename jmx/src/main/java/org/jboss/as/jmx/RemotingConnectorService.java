@@ -24,6 +24,7 @@ package org.jboss.as.jmx;
 import java.io.IOException;
 
 import javax.management.MBeanServer;
+import javax.management.remote.JMXServiceURL;
 
 import org.jboss.as.controller.ServiceVerificationHandler;
 import org.jboss.as.remoting.RemotingServices;
@@ -39,6 +40,7 @@ import org.jboss.msc.service.StopContext;
 import org.jboss.msc.value.InjectedValue;
 import org.jboss.remoting3.Endpoint;
 import org.jboss.remotingjmx.RemotingConnectorServer;
+import sun.management.ConnectorAddressLink;
 
 /**
  * The remote connector services
@@ -60,8 +62,17 @@ public class RemotingConnectorService implements Service<RemotingConnectorServer
         server = new RemotingConnectorServer(mBeanServer.getValue(), endpoint.getValue());
         try {
             server.start();
+            setJvmAttachAddress(server.getAddress());
         } catch (IOException e) {
             throw new StartException(e);
+        }
+    }
+
+    private void setJvmAttachAddress(JMXServiceURL jmxServiceURL) {
+        try {
+            ConnectorAddressLink.export("service:jmx:remoting-jmx://localhost:9999" /*FIXME: jmxServiceURL.toString()*/);
+        } catch (Exception e) {
+            JmxLogger.ROOT_LOGGER.connectorAddressLinkFailure(e);
         }
     }
 

@@ -24,6 +24,7 @@ package org.jboss.as.jmx;
 
 import static org.jboss.logging.Logger.Level.ERROR;
 import static org.jboss.logging.Logger.Level.WARN;
+import static org.jboss.logging.Logger.Level.DEBUG;
 
 import javax.management.ObjectName;
 
@@ -101,4 +102,12 @@ public interface JmxLogger extends BasicLogger {
     @LogMessage(level = WARN)
     @Message(id = 11305, value = "<jmx-connector/> is no longer supporting. <remoting-connector/> should be used instead to allow remote connections via JBoss Remoting.")
     void jmxConnectorNotSupported();
+
+    /**
+     * Logs an error message indicating a failure to export the address to the JVM instrumentation buffer.
+     *
+     */
+    @LogMessage(level = DEBUG)
+    @Message(id = 11306, value = "Failed to export JMX connector address")
+    void connectorAddressLinkFailure(@Cause Throwable cause);
 }
