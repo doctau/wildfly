@@ -57,6 +57,7 @@ import org.jboss.as.controller.registry.Resource;
 import org.jboss.as.controller.services.path.PathManager;
 import org.jboss.as.controller.services.path.PathManagerService;
 import org.jboss.as.domain.management.access.AccessAuthorizationResourceDefinition;
+import org.jboss.as.platform.diagnostics.DiagnosticsConstants;
 import org.jboss.as.platform.mbean.PlatformMBeanConstants;
 import org.jboss.as.platform.mbean.RootPlatformMBeanResource;
 import org.jboss.as.remoting.HttpListenerRegistryService;
@@ -377,6 +378,9 @@ public final class ServerService extends AbstractControllerService {
 
         // Platform MBeans
         rootResource.registerChild(PlatformMBeanConstants.ROOT_PATH, new RootPlatformMBeanResource());
+
+        //diagnostics
+        rootResource.registerChild(DiagnosticsConstants.DIAGNOSTICS_PATH, Resource.Factory.create());
     }
 
     @Override

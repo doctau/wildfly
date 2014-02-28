@@ -2029,6 +2029,29 @@
                     <artifactId>xom</artifactId>
                 </dependency>
 
+
+
+		<dependency>
+			<groupId>com.redhat.gss.highcpu</groupId>
+			<artifactId>core</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.redhat.gss.highcpu</groupId>
+			<artifactId>backends</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.redhat.gss.highcpu</groupId>
+			<artifactId>sun</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.redhat.gss.highcpu</groupId>
+			<artifactId>ibm</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
             </dependencies>
 
             <properties>

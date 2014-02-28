@@ -70,6 +70,7 @@ import org.jboss.as.controller.services.path.PathResourceDefinition;
 import org.jboss.as.domain.management.CoreManagementResourceDefinition;
 import org.jboss.as.domain.management.audit.EnvironmentNameReader;
 import org.jboss.as.domain.management.security.WhoAmIOperation;
+import org.jboss.as.platform.diagnostics.DiagnosticsResourceRegistrar;
 import org.jboss.as.platform.mbean.PlatformMBeanResourceRegistrar;
 import org.jboss.as.repository.ContentRepository;
 import org.jboss.as.server.DeployerChainAddHandler;
@@ -390,6 +391,7 @@ public class ServerRootResourceDefinition extends SimpleResourceDefinition {
 
         // Platform MBeans
         PlatformMBeanResourceRegistrar.registerPlatformMBeanResources(resourceRegistration);
+        DiagnosticsResourceRegistrar.registerDiagnosticsResources(resourceRegistration);
 
         // Paths
         resourceRegistration.registerSubModel(PathResourceDefinition.createSpecified(pathManager));

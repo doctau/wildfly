@@ -13,7 +13,7 @@ import org.wildfly.security.manager.WildFlySecurityManager;
 /**
  * Process utilities to kill a process.
  */
-abstract class ProcessUtils {
+public abstract class ProcessUtils {
 
     private static final ProcessUtils processUtils;
     private static final String modulesJar = "jboss-modules.jar";
@@ -48,6 +48,15 @@ abstract class ProcessUtils {
             ProcessLogger.ROOT_LOGGER.debugf(t, "failed to resolve pid of process '%s'", processName);
         }
         return false;
+    }
+
+    public static int getProcessId(final String processName) {
+        try {
+            return processUtils.resolveProcessId(processName);
+        } catch (Throwable t) {
+            ProcessLogger.ROOT_LOGGER.debugf(t, "failed to resolve pid of process '%s'", processName);
+            return -1;
+        }
     }
 
     /**

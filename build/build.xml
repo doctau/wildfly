@@ -1013,6 +1013,10 @@
 
         <module-def name="org.jboss.as.host-controller">
             <maven-resource group="org.wildfly" artifact="wildfly-host-controller"/>
+            <maven-resource group="com.redhat.gss.highcpu" artifact="core"/>
+            <maven-resource group="com.redhat.gss.highcpu" artifact="sun"/>
+            <maven-resource group="com.redhat.gss.highcpu" artifact="ibm"/>
+            <maven-resource group="com.redhat.gss.highcpu" artifact="backends"/>
         </module-def>
 
         <module-def name="org.wildfly.extension.io">
