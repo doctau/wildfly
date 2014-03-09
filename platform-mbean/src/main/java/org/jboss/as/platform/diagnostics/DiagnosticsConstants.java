@@ -37,6 +37,24 @@ public class DiagnosticsConstants {
 
     public static final PathElement DIAGNOSTICS_PATH = PathElement.pathElement(CORE_SERVICE, DIAGNOSTICS);
 
+
+    public static final String SERVER_TEXT_THREAD_DUMP = "server-text-thread-dump";
+    public static final String SERVER_PARSED_THREAD_DUMP = "server-object-thread-dump";
+
+
+    public static final String SERVER = "server";
+
+
+    public static final String THREAD_STATE_DETAIL = "thread-state-detail";
+
+
+    public static final String NATIVE_THREAD_ID = "thread-native-id";
+    public static final String THREAD_PRIORITY = "thread-priority";
+    public static final String THREAD_DAEMON = "thread-daemon";
+    public static final String BLOCKING_SYNCHRONIZER = "blocked-synchronizer";
+    public static final String WAITING_SYNCHRONIZER = "waiting-synchronizer";
+    public static final String MONITOR_TD = "monitor=id";
+
     private DiagnosticsConstants() {
         // prevent instantiation
     }

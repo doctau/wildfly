@@ -88,7 +88,8 @@ import org.jboss.as.host.controller.resources.NativeManagementResourceDefinition
 import org.jboss.as.host.controller.resources.ServerConfigResourceDefinition;
 import org.jboss.as.host.controller.resources.StoppedServerResource;
 import org.jboss.as.platform.diagnostics.DiagnosticsResourceRegistrar;
-import org.jboss.as.platform.diagnostics.ServerThreadDumpHandler;
+import org.jboss.as.platform.diagnostics.ServerParsedThreadDumpHandler;
+import org.jboss.as.platform.diagnostics.ServerTextThreadDumpHandler;
 import org.jboss.as.platform.mbean.PlatformMBeanResourceRegistrar;
 import org.jboss.as.repository.ContentRepository;
 import org.jboss.as.repository.HostFileRepository;
@@ -308,8 +309,10 @@ public class HostResourceDefinition extends SimpleResourceDefinition {
         PlatformMBeanResourceRegistrar.registerPlatformMBeanResources(hostRegistration);
         DiagnosticsResourceRegistrar.registerDiagnosticsResources(hostRegistration);
 
-        ServerThreadDumpHandler serverThreadDumpHandler = new ServerThreadDumpHandler(serverInventory);
-        hostRegistration.registerOperationHandler(ServerThreadDumpHandler.DEFINITION, serverThreadDumpHandler);
+        ServerTextThreadDumpHandler serverTextThreadDumpHandler = new ServerTextThreadDumpHandler(serverInventory);
+        hostRegistration.registerOperationHandler(ServerTextThreadDumpHandler.DEFINITION, serverTextThreadDumpHandler);
+        ServerParsedThreadDumpHandler serverParsedThreadDumpHandler = new ServerParsedThreadDumpHandler(serverInventory);
+        hostRegistration.registerOperationHandler(ServerParsedThreadDumpHandler.DEFINITION, serverParsedThreadDumpHandler);
     }
 
 
