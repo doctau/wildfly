@@ -21,7 +21,7 @@ public class ThreadDumpModelConverter {
         mn.get("timestamp").set(td.getTimestamp());
         mn.get("jni-global-references").set(td.getJniGlobalReferences());
 
-        ModelNode tns = mn.get("threads");
+        ModelNode tns = mn.get("threads").setEmptyList();
         for (ThreadInfo ti: td.getThreads()) {
             tns.add(threadToModel(ti));
         }
@@ -37,14 +37,16 @@ public class ThreadDumpModelConverter {
         mn.get(PlatformMBeanConstants.IN_NATIVE).set(ti.getState() == ThreadState.UNKNOWN);
 
 
-        final ModelNode stack = mn.get(PlatformMBeanConstants.STACK_TRACE);
+        final ModelNode stack = mn.get(PlatformMBeanConstants.STACK_TRACE).setEmptyList();
         for (ThreadFrame tf: ti.getFrames()) {
             stack.add(frameToModel(tf));
         }
 
-        final ModelNode synchronizers = mn.get(PlatformMBeanConstants.LOCKED_SYNCHRONIZERS); // and LOCKED_MONITORS?
-        for (ThreadSynchronizer ts: ti.getSynchronizers()) {
-            synchronizers.add(synchronizerToModel(ts));
+        if (!ti.getSynchronizers().isEmpty()) {
+            final ModelNode synchronizers = mn.get(PlatformMBeanConstants.LOCKED_SYNCHRONIZERS); // and LOCKED_MONITORS?
+            for (ThreadSynchronizer ts: ti.getSynchronizers()) {
+                synchronizers.add(synchronizerToModel(ts));
+            }
         }
 
 
@@ -56,7 +58,7 @@ public class ThreadDumpModelConverter {
 
         ThreadSynchronizer ts = ti.getBlockingSynchronizer();
         if (ts != null) {
-            ModelNode l = mn.get(PlatformMBeanConstants.LOCK_INFO).add();
+            ModelNode l = mn.get(PlatformMBeanConstants.LOCK_INFO);
             l.get(PlatformMBeanConstants.CLASS_NAME).set(ts.getKlass());
             l.get(PlatformMBeanConstants.IDENTITY_HASH_CODE).set(ts.getAddress());
             mn.get(PlatformMBeanConstants.LOCK_NAME).set(ts.getKlass() + '@' + ts.getAddress());
@@ -94,9 +96,11 @@ public class ThreadDumpModelConverter {
         if (tf.getBlocking() != null)
             mn.get(DiagnosticsConstants.WAITING_SYNCHRONIZER).set(synchronizerToModel(tf.getWaiting()));
 
-        ModelNode lsn = mn.get(PlatformMBeanConstants.LOCKED_SYNCHRONIZERS);
-        for (ThreadSynchronizer ts: tf.getTaken()) {
-            lsn.add(synchronizerToModel(ts));
+        if (!tf.getTaken().isEmpty()) {
+            ModelNode lsn = mn.get(PlatformMBeanConstants.LOCKED_SYNCHRONIZERS);
+            for (ThreadSynchronizer ts: tf.getTaken()) {
+                lsn.add(synchronizerToModel(ts));
+            }
         }
 
         return mn;

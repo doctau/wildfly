@@ -40,9 +40,12 @@ public class DiagnosticsConstants {
 
     public static final String SERVER_TEXT_THREAD_DUMP = "server-text-thread-dump";
     public static final String SERVER_PARSED_THREAD_DUMP = "server-object-thread-dump";
+    public static final String SERVER_HIGH_CPU_DUMP = "server-high-cpu-dump";
 
 
     public static final String SERVER = "server";
+    public static final String COUNT = "count";
+    public static final String DELAY = "delay";
 
 
     public static final String THREAD_STATE_DETAIL = "thread-state-detail";
@@ -54,6 +57,10 @@ public class DiagnosticsConstants {
     public static final String BLOCKING_SYNCHRONIZER = "blocked-synchronizer";
     public static final String WAITING_SYNCHRONIZER = "waiting-synchronizer";
     public static final String MONITOR_TD = "monitor=id";
+
+
+
+
 
     private DiagnosticsConstants() {
         // prevent instantiation

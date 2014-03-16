@@ -24,24 +24,23 @@ package org.jboss.as.platform.diagnostics;
 
 import org.jboss.as.controller.OperationContext;
 import org.jboss.as.controller.OperationDefinition;
-import org.jboss.as.controller.OperationStepHandler;
 import org.jboss.as.controller.SimpleOperationDefinitionBuilder;
-import org.jboss.as.controller.registry.OperationEntry;
 import org.jboss.as.host.controller.ServerInventory;
+import org.jboss.dmr.ModelNode;
 import org.jboss.dmr.ModelType;
 
+import com.redhat.gss.highcpu.data.ThreadDump;
 import com.redhat.gss.highcpu.gatherer.InformationGatherer;
 
 /**
  * @author James Livingston (c) 2014 Red Hat Inc.
  */
-public class ServerParsedThreadDumpHandler extends AbstractServerThreadDumpHandler implements OperationStepHandler {
-    public static final OperationDefinition DEFINITION = new SimpleOperationDefinitionBuilder(DiagnosticsConstants.SERVER_TEXT_THREAD_DUMP, DiagnosticsDescriptions.getResolver(DiagnosticsConstants.DIAGNOSTICS))
+public class ServerParsedThreadDumpHandler extends AbstractServerThreadDumpHandler {
+    public static final OperationDefinition DEFINITION = new SimpleOperationDefinitionBuilder(DiagnosticsConstants.SERVER_PARSED_THREAD_DUMP, DiagnosticsDescriptions.getResolver(DiagnosticsConstants.DIAGNOSTICS))
             .setParameters(SERVER)
             .setReplyType(ModelType.STRING)
             .setRuntimeOnly()
             .setReadOnly()
-            .withFlag(OperationEntry.Flag.HOST_CONTROLLER_ONLY)
             .build();
 
     public ServerParsedThreadDumpHandler(ServerInventory serverInventory) {
@@ -50,7 +49,8 @@ public class ServerParsedThreadDumpHandler extends AbstractServerThreadDumpHandl
     }
 
     protected void performDump(InformationGatherer gatherer, OperationContext context) {
-        String dump = gatherer.takeTextDump();
-        context.getResult().set(dump);
+        ThreadDump dump = gatherer.takeParsedDump();
+        ModelNode mn = ThreadDumpModelConverter.dumpToModel(dump);
+        context.getResult().set(mn);
     }
 }

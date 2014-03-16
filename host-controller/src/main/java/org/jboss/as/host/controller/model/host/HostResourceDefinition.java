@@ -88,6 +88,7 @@ import org.jboss.as.host.controller.resources.NativeManagementResourceDefinition
 import org.jboss.as.host.controller.resources.ServerConfigResourceDefinition;
 import org.jboss.as.host.controller.resources.StoppedServerResource;
 import org.jboss.as.platform.diagnostics.DiagnosticsResourceRegistrar;
+import org.jboss.as.platform.diagnostics.ServerHighCpuDumpHandler;
 import org.jboss.as.platform.diagnostics.ServerParsedThreadDumpHandler;
 import org.jboss.as.platform.diagnostics.ServerTextThreadDumpHandler;
 import org.jboss.as.platform.mbean.PlatformMBeanResourceRegistrar;
@@ -313,6 +314,8 @@ public class HostResourceDefinition extends SimpleResourceDefinition {
         hostRegistration.registerOperationHandler(ServerTextThreadDumpHandler.DEFINITION, serverTextThreadDumpHandler);
         ServerParsedThreadDumpHandler serverParsedThreadDumpHandler = new ServerParsedThreadDumpHandler(serverInventory);
         hostRegistration.registerOperationHandler(ServerParsedThreadDumpHandler.DEFINITION, serverParsedThreadDumpHandler);
+        ServerHighCpuDumpHandler serverHighCpuDumpHandler = new ServerHighCpuDumpHandler(serverInventory);
+        hostRegistration.registerOperationHandler(ServerHighCpuDumpHandler.DEFINITION, serverHighCpuDumpHandler);
     }
 
 
